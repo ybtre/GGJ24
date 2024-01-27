@@ -12,7 +12,12 @@ public class NoteDestroyer : MonoBehaviour
     {
       if (other.name.Contains("Note"))
       {
-        Manager.TagNoteDestroy(other.gameObject);
+        other.gameObject.transform.DOComplete();
+        other.gameObject.transform.DOScale(Vector3.zero, 1f)
+          .OnComplete(()=>
+          {
+            Manager.TagNoteDestroy(other.gameObject);
+          });
       }
     }
   }

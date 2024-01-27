@@ -33,6 +33,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("GOOD");
               Manager.GiveGood(Player.P1);
+              Manager.InstantiateExplosion(Manager.left_note_targets[0].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -43,6 +44,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("PERFECT");
               Manager.GivePerfect(Player.P1);
+              Manager.InstantiateExplosion(Manager.left_note_targets[0].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -56,6 +58,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("GOOD");
               Manager.GiveGood(Player.P1);
+              Manager.InstantiateExplosion(Manager.left_note_targets[1].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -66,6 +69,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("PERFECT");
               Manager.GivePerfect(Player.P1);
+              Manager.InstantiateExplosion(Manager.left_note_targets[1].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -79,6 +83,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("GOOD");
               Manager.GiveGood(Player.P1);
+              Manager.InstantiateExplosion(Manager.left_note_targets[2].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -89,6 +94,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("PERFECT");
               Manager.GivePerfect(Player.P1);
+              Manager.InstantiateExplosion(Manager.left_note_targets[2].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -109,6 +115,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("GOOD");
               Manager.GiveGood(Player.P2);
+              Manager.InstantiateExplosion(Manager.right_note_targets[0].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -119,6 +126,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("PERFECT");
               Manager.GivePerfect(Player.P2);
+              Manager.InstantiateExplosion(Manager.right_note_targets[0].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -132,6 +140,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("GOOD");
               Manager.GiveGood(Player.P2);
+              Manager.InstantiateExplosion(Manager.right_note_targets[1].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -142,6 +151,7 @@ public class NoteCollision : MonoBehaviour
             {
               Debug.Log("PERFECT");
               Manager.GivePerfect(Player.P2);
+              Manager.InstantiateExplosion(Manager.right_note_targets[1].transform);
               Manager.TagNoteDestroy(this.gameObject);
             }
           }
@@ -154,6 +164,7 @@ public class NoteCollision : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
               Debug.Log("GOOD");
+              Manager.InstantiateExplosion(Manager.right_note_targets[2].transform);
               Manager.GiveGood(Player.P2);
               Manager.TagNoteDestroy(this.gameObject);
             }
@@ -164,6 +175,7 @@ public class NoteCollision : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
               Debug.Log("PERFECT");
+              Manager.InstantiateExplosion(Manager.right_note_targets[2].transform);
               Manager.GivePerfect(Player.P2);
               Manager.TagNoteDestroy(this.gameObject);
             }

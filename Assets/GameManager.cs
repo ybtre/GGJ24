@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
   [Space(15)]
   [Header("References")]
   public NoteCollision note_pf;
+  public GameObject expl_pf;
 
   public Transform[] left_notes_start;
   public GameObject[] left_note_targets;
@@ -130,18 +131,39 @@ public class GameManager : MonoBehaviour
       new_note.transform.DOScale(0.17f, .1f);
       new_note.transform.DOMove(target, 4.0f)
         .SetEase(Ease.Linear);
-      new_note.transform.DORotate(new Vector3(0, -90, 38), .1f);
+      if (LOC == 0)
+      {
+        new_note.transform.DORotate(new Vector3(0, 90, -38), .1f);
+      }
+      else if (LOC == 1)
+      {
+        new_note.transform.DORotate(new Vector3(-38, 0, 0), .1f);
+      }
+      else if (LOC == 2)
+      {
+        new_note.transform.DORotate(new Vector3(0, -90, 38), .1f);
+      }
 
       notes.Add(new_note);
     }
 
   }
 
+  public void InstantiateExplosion(Transform AT)
+  {
+    GameObject new_expl = Instantiate(expl_pf, AT);
+    var t = new_expl.GetComponentsInChildren<ParticleSystem>();
+    foreach(ParticleSystem p in t)
+    {
+      p.Play();
+    }
+  }
+
   private void InstantiateNoteLeft(int LOC, Player P, out NoteCollision new_note, out Vector3 target)
   {
     new_note = Instantiate(note_pf, left_notes_start[LOC]);
     target = new Vector3(
-      left_note_targets[LOC].transform.position.x + 1f,
+      left_note_targets[LOC].transform.position.x + 0.2f,
       left_note_targets[LOC].transform.position.y,
       left_note_targets[LOC].transform.position.z);
     new_note.location = (Location)LOC;
@@ -152,7 +174,7 @@ public class GameManager : MonoBehaviour
   {
     new_note = Instantiate(note_pf, right_notes_start[LOC]);
     target = new Vector3(
-      right_note_targets[LOC].transform.position.x - 1f,
+      right_note_targets[LOC].transform.position.x - 0.2f,
       right_note_targets[LOC].transform.position.y,
       right_note_targets[LOC].transform.position.z);
     new_note.location = (Location)LOC;
