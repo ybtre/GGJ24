@@ -105,7 +105,7 @@ public class NoteCollision : MonoBehaviour
         {
           if (good != null)
           {
-            if (Input.GetKeyUp(KeyCode.LeftArrow))
+            if (Input.GetKeyUp(KeyCode.RightArrow))
             {
               Debug.Log("GOOD");
               Manager.GiveGood(Player.P2);
@@ -115,7 +115,7 @@ public class NoteCollision : MonoBehaviour
 
           if (perfect != null)
           {
-            if (Input.GetKeyUp(KeyCode.LeftArrow))
+            if (Input.GetKeyUp(KeyCode.RightArrow))
             {
               Debug.Log("PERFECT");
               Manager.GivePerfect(Player.P2);
@@ -151,7 +151,7 @@ public class NoteCollision : MonoBehaviour
         {
           if (good != null)
           {
-            if (Input.GetKeyUp(KeyCode.RightArrow))
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
               Debug.Log("GOOD");
               Manager.GiveGood(Player.P2);
@@ -161,7 +161,7 @@ public class NoteCollision : MonoBehaviour
 
           if (perfect != null)
           {
-            if (Input.GetKeyUp(KeyCode.RightArrow))
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
               Debug.Log("PERFECT");
               Manager.GivePerfect(Player.P2);

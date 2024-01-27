@@ -110,6 +110,14 @@ public class GameManager : MonoBehaviour
       new_note.transform.DOScale(0.17f, .1f);
       new_note.transform.DOMove(target, 4.0f)
         .SetEase(Ease.Linear);
+      if(LOC == 0)
+      {
+        new_note.transform.DORotate(new Vector3(0, -90, 38), .1f);
+      }
+      else if(LOC == 1)
+      {
+        new_note.transform.DORotate(new Vector3(-38, 0, 0), .1f);
+      }
 
       notes.Add(new_note);
     }
@@ -173,7 +181,7 @@ public class GameManager : MonoBehaviour
   {
     if (P == Player.P1)
     {
-      p2_score += 50;
+      p1_score += 50;
       p1_mana += 5;
     }
     if(P == Player.P2)
