@@ -3,7 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -20,20 +22,30 @@ public enum Player
   P2,
 }
 
+public enum Winner
+{
+  NONE,
+  P1,
+  P2,
+}
+
 public class GameManager : MonoBehaviour
 {
   [Header("Stats")]
   public int p1_score = 0;
   public int p1_mana = 0;
+  public int p1_health = 100;
 
   public int p2_score = 0;
   public int p2_mana = 0;
+  public int p2_health = 100;
 
+  public int dmg = 10;
   public int max_mana = 100;
 
-  private int low = 20;
-  private int med = 40;
-  private int high = 60;
+  public int low = 20;
+  public int med = 40;
+  public int high = 60;
 
   [Space(15)]
   [Header("References")]
@@ -55,6 +67,26 @@ public class GameManager : MonoBehaviour
   public Slider p1_mana_slider;
   public Slider p2_mana_slider;
 
+  public Slider[] health_sliders;
+
+  private Winner winner = Winner.NONE;
+  private WinnerNum winnerNumber;
+
+  public static GameManager Instance { get; private set; }
+  private void Awake()
+  {
+    // If there is an instance, and it's not me, delete myself.
+    DontDestroyOnLoad(this);
+    if (Instance != null && Instance != this)
+    {
+      Destroy(this);
+    }
+    else
+    {
+      Instance = this;
+    }
+  }
+
   private void Start()
   {
     Application.targetFrameRate = 60;
@@ -65,6 +97,8 @@ public class GameManager : MonoBehaviour
   private void Update()
   {
     note_spawn_timer += Time.deltaTime;
+
+    CheckAndTransitionWinner();
 
     if (note_spawn_timer > note_spawn_interval)
     {
@@ -77,14 +111,42 @@ public class GameManager : MonoBehaviour
       note_spawn_timer = 0;
     }
 
-    P1Abilities();
-    P2Abilities();
-
     p1_score_tmp.text = p1_score.ToString();
     p2_score_tmp.text = p2_score.ToString();
 
     p1_mana_slider.value = p1_mana;
     p2_mana_slider.value = p2_mana;
+
+    health_sliders[0].value = p1_health;
+    health_sliders[1].value = p2_health;
+  }
+
+  private void CheckAndTransitionWinner()
+  {
+    if (p1_health < 0)
+    {
+      winner = Winner.P1;
+      TransitionToGameOver();
+    }
+    else if (p2_health < 0)
+    {
+      winner = Winner.P2;
+      TransitionToGameOver();
+    }
+
+    if (SceneManager.GetActiveScene().name == "GameOver")
+    {
+      winnerNumber = FindObjectOfType<WinnerNum>();
+
+      if (winner == Winner.P1)
+      {
+        winnerNumber.tmp.text = "2";
+      }
+      else if (winner == Winner.P2)
+      {
+        winnerNumber.tmp.text = "1";
+      }
+    }
   }
 
   public float note_destroy_interval = 5f;
@@ -98,6 +160,11 @@ public class GameManager : MonoBehaviour
       PurgeNotes();
       note_destroy_timer = 0;
     }
+  }
+
+  private void TransitionToGameOver()
+  {
+    SceneManager.LoadScene(1);
   }
 
   private void CreateNote(int LOC, Player P)
@@ -227,81 +294,4 @@ public class GameManager : MonoBehaviour
     }
   }
 
-  private void P1Abilities()
-  {
-    if (Input.GetKeyUp(KeyCode.V))
-    {
-      if(p1_mana >= low)
-      {
-        Debug.Log("P1: Ability 1");
-        p1_mana -= low;
-      }
-    }
-
-    if (Input.GetKeyUp(KeyCode.B))
-    {
-      if (p1_mana >= med)
-      {
-        Debug.Log("P1: Ability 2");
-        p1_mana -= med;
-      }
-    }
-
-    if (Input.GetKeyUp(KeyCode.N))
-    {
-      if (p1_mana >= high)
-      {
-        Debug.Log("P1: Ability 3");
-        p1_mana -= high;
-      }
-    }
-
-    if (Input.GetKeyUp(KeyCode.M))
-    {
-      if (p1_mana >= med)
-      {
-        Debug.Log("P1: Defence");
-        p1_mana -= med;
-      }
-    }
-  }
-
-  private void P2Abilities()
-  {
-    if (Input.GetKeyUp(KeyCode.Alpha7))
-    {
-      if (p2_mana >= low)
-      {
-        Debug.Log("P2: Ability 1");
-        p2_mana -= low;
-      }
-    }
-
-    if (Input.GetKeyUp(KeyCode.Alpha8))
-    {
-      if (p2_mana >= med)
-      {
-        Debug.Log("P2: Ability 2");
-        p2_mana -= med;
-      }
-    }
-
-    if (Input.GetKeyUp(KeyCode.Alpha9))
-    {
-      if (p2_mana >= high)
-      {
-        Debug.Log("P2: Ability 3");
-        p2_mana -= high;
-      }
-    }
-
-    if (Input.GetKeyUp(KeyCode.Alpha0))
-    {
-      if (p2_mana >= med)
-      {
-        Debug.Log("P2: Defence");
-        p2_mana -= med;
-      }
-    }
-  }
 }
